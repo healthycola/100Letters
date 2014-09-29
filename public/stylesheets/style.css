@@ -2,6 +2,20 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+div,
+#topheader {
+  margin-top: 50px;
+  border-bottom: 1px solid #bf9393;
+  font: 50px Lucida Grande, "Helvetica", Arial, sans-serif;
+  color: #7b3c3c;
+  text-align: center;
+}
+div p,
+#topheader p {
+  margin: 0px;
+  padding: 0px;
+  padding-bottom: 6px;
+}
 a {
   color: #00b7ff;
 }

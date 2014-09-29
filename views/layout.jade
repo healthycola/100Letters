@@ -2,8 +2,29 @@ doctype html
 html
   head
     title!= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
   body
-  #top-header
-     p 100 Letters
-    block content
+    .navbar.navbar-inverse
+        .container
+            .navbar-header
+                a.navbar-brand 100 Letters
+            .navbar-collapse.collapse.navbar-inverse-collapse
+                ul.nav.navbar-nav
+                    li.active
+                        a(href='#') Login
+                    li
+                        a(href='#') About
+                    li
+                        a(href='#') Contact
+                ul.nav.navbar-nav.navbar-right
+                    li.dropdown
+                        a.dropdown-toggle(href="#" data-toggle="dropdown") User Control
+                        ul.dropdown-menu
+                            li
+                                a(href='#') UserControl  
+
+    .container
+      h1 100 Letters
+      block content

@@ -1,12 +1,8 @@
 extends layout
 
 block content
-  h1!= title
-  p Welcome to #{title}!
-  div.top
-    form.form-horizontal(method="post", id="loginForm")
-      label Username
-      input.span3(id="username", type="text", name="User", placeholder="Enter your username")
-      label Password
-      input.span3(id="password", type="password", name="Password")
-      input.btn(type="submit", value="Log In")
+  div.jumbotron
+    h1 Welcome to 100 Letters
+    p 100 Letters gives people a simple means of communicating small sweet messages to their loved ones at times that they need them the most. It's simple!
+    p
+        a.btn.btn-primary.btn-lg(href='#') Learn More

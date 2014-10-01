@@ -11,24 +11,46 @@ router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' 
 
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-        successRedirect : '/login',
+        successRedirect : '/profile',
         failureRedirect : '/'
-    }));
+    })
+);
 
-router.get('/login', isLoggedIn, function(req, res) {
-	res.render('login', { user : req.user,
-                          title: 'Login'});
-});
+router.get('/profile', isLoggedIn, 
+    function(req, res) {
+	res.render('profile', { user : req.user,
+                          title: 'My Profile'});
+    }
+);
 
-router.get('/logout', function(req, res) {
+router.get('/logout', 
+    function(req, res) {
 	req.logout();
 	res.redirect('/');
-});
+    }
+);
+
+router.get('/writeLetter', isLoggedIn, 
+    function(req, res) {
+    res.render('writeLetter', { user : req.user,
+                          title: 'Write a Letter'});
+    }
+);
+
+router.get('/viewAllLetters', isLoggedIn, 
+    function(req, res) {
+    res.render('viewAllLetters', { user : req.user,
+                          title: 'All Letters'});
+    }
+);
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
+    {
         return next();
+    }
 
     res.redirect('/');
 }
+
 module.exports = router;

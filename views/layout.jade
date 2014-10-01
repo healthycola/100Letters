@@ -12,18 +12,29 @@ html
                 a.navbar-brand(href='/') 100 Letters
             .navbar-collapse.collapse.navbar-inverse-collapse
                 ul.nav.navbar-nav
-                    li.active
+                    if (title == 'Login')
+                      li.active
+                          a(href='#') Login
+                    else
+                      li
                         a(href='#') Login
-                    li
+                    if (title == 'About')
+                      li.active
                         a(href='#') About
-                    li
-                        a(href='#') Contact
+                    else
+                      li
+                        a(href='#') About
+                    - if (true)
+                      li
+                        a(href='writeLetter') Write A Letter
                 ul.nav.navbar-nav.navbar-right
                     li.dropdown
-                        a.dropdown-toggle(href="#" data-toggle="dropdown") User Control
+                        a.dropdown-toggle(href="#" data-toggle="dropdown") User Settings
                         ul.dropdown-menu
                             li
-                                a(href='#') UserControl  
+                                a(href='profile') My Profile
+                            li
+                                a(href='viewAllLetters') My letters  
 
     .container
-      block content
+        block content

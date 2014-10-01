@@ -1,5 +1,9 @@
 extends layout
 
 block content
-  h1!= login
-  p Login successful for #{user.facebook.name}
+    div.panel.panel-primary
+        div.panel-heading
+            h3.panel-title Your Facebook Information
+        div.panel-body 
+            p Name: #{user.facebook.name}
+            p Email: #{user.facebook.email}

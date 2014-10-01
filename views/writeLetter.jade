@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    div.well
+        form.form-horizontal
+            fieldset
+                legend Write a new Letter
+                div.form-group
+                label.col-lg-2.control-label(for='LetterTitle') Title Of the Letter
+                div.col-lg-10
+                    input.form-control(type='text', id='letterTitle', placeholder="For when you're missing home...")
+                label.col-lg-2.control-label(for='RecepientName') Name of Recepient
+                div.col-lg-10
+                    input.form-control(type='text', id='recepientName', placeholder="Who is this letter for?")
+                div.form-group
+                label.col-lg-2.control-label(for='textArea') Content
+                div.col-lg-10
+                    textarea.form-control(rows='5', id='letterContent')
+                div.form-group
+                div.col-lg-10.col-lg-offset-2
+                    button.btn.btn-primary(type='submit') Submit
+    - if ('temp' != undefined || 'temp' != '')
+        p blah
+

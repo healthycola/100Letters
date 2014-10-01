@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    div.panel.panel-primary
+        div.panel-heading
+            h3.panel-title Your Facebook Information
+        div.panel-body 
+            | Name: #{user.facebook.name} <br/> Email: #{user.facebook.email}

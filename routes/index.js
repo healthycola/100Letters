@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var facebook = require('../models/fbReqs.js')
 /* GET home page. */ 
 
-    router.get('/', function(req, res) {
+router.get('/', function(req, res) {
   res.render('index', { title: '100 Letters' });
 });
 
@@ -32,6 +33,7 @@ router.get('/logout',
 
 router.get('/writeLetter', isLoggedIn, 
     function(req, res) {
+    facebook.fbAPI(req.user.facebook.token);
     res.render('writeLetter', { user : req.user,
                           title: 'Write a Letter'});
     }

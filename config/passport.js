@@ -15,12 +15,6 @@ module.exports = function(passport) {
         });
     })
 
-
-
-
-
-
-
     passport.use(new FacebookStrategy({
     clientID: configAuth.facebookAuth.clientID,
     clientSecret: configAuth.facebookAuth.clientSecret,
@@ -29,6 +23,8 @@ module.exports = function(passport) {
 
     function(accessToken, refreshToken, profile, done){
             //First look for the user in the db
+            console.log(profile.id);
+            console.log(profile);
             User.findOne({ 'facebook.id' : profile.id }, function(err, user){
                 if (err)
                     return done(err);
@@ -37,7 +33,7 @@ module.exports = function(passport) {
                     return done(null, user);
                 } else {
                     var newUser = new User();
-
+                    newUser.facebook.username = profile.username;
                     newUser.facebook.id = profile.id;
                     newUser.facebook.token = accessToken;
                     newUser.facebook.name = profile.name.givenName;

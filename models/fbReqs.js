@@ -1,15 +1,13 @@
 var FB = require('fb');
 
-var fbAPI = function(profileID) { 
-    FB.setAccessToken(profileID);
-    FB.api('/me', function (res) {
-  console.log(profileID);
+var fbAPI = function(accessToken) { 
+    FB.setAccessToken(accessToken);
+    FB.api('/me/friends', function (res) {
   if(!res || res.error) {
    console.log(!res ? 'error occurred' : res.error);
    return;
   }
-  console.log(res.id);
-  console.log(res.name);
+  console.log(res.data[0].name);
 });
 };
 

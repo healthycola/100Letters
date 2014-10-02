@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
   res.render('index', { title: '100 Letters' });
 });
 
-router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_friends' ]}));
 
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', {

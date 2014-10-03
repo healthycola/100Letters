@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
 var letterSchema = mongoose.Schema({
-    id: integer,
-    ownerID: string,
-    recepientID: string,
+    id: Number,
+    ownerID: String,
+    recepientID: String,
     title: String,
     content: String
 });

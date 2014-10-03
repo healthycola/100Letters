@@ -2,23 +2,27 @@ extends layout
 
 block content
     div.well
-        form.form-horizontal
+        form.form-horizontal(method='post', action='/newLetter')
             fieldset
                 legend Write a new Letter
                 div.form-group
                 label.col-lg-2.control-label(for='LetterTitle') Title Of the Letter
                 div.col-lg-10
-                    input.form-control(type='text', id='letterTitle', placeholder="For when you're missing home...")
+                    input.form-control(type='text', id='letterTitle', name='letterTitle', placeholder="For when you're missing home...")
                 label.col-lg-2.control-label(for='RecepientName') Name of Recepient
                 div.col-lg-10
-                    input.form-control(type='text', id='recepientName', placeholder="Who is this letter for?")
+                    select.form-control(id="select", name='recipient')
+                        -for (var a = 0; a < friends.length; a++)
+                            option(value=friends[a].id) #{friends[a].name}
                 div.form-group
                 label.col-lg-2.control-label(for='textArea') Content
                 div.col-lg-10
-                    textarea.form-control(rows='5', id='letterContent')
+                    textarea.form-control(rows='5', id='letterContent', name='letterContent')
                 div.form-group
                 div.col-lg-10.col-lg-offset-2
                     button.btn.btn-primary(type='submit') Submit
-    - if ('temp' != undefined || 'temp' != '')
-        p blah
-
+    table.table.table-striped.table-hover
+                tbody
+                    -for (var a = 0; a < friends.length; a++)
+                        tr
+                            td Letter to me #{friends[a].name}

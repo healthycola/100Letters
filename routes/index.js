@@ -2,13 +2,14 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var facebook = require('../models/fbReqs.js')
+var Letter = require('../models/letter.js')
 /* GET home page. */ 
 
 router.get('/', function(req, res) {
   res.render('index', { title: '100 Letters' });
 });
 
-router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_friends' ]}));
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_friends' ] }));
 
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
@@ -33,9 +34,13 @@ router.get('/logout',
 
 router.get('/writeLetter', isLoggedIn, 
     function(req, res) {
-    facebook.fbAPI(req.user.facebook.token);
-    res.render('writeLetter', { user : req.user,
-                          title: 'Write a Letter'});
+    facebook.fbAPI(req.user.facebook.token, function(data) {
+        console.log(data);
+        res.render('writeLetter', 
+            { user : req.user,
+              title: 'Write a Letter', 
+              friends: data});
+    });
     }
 );
 
@@ -55,4 +60,19 @@ function isLoggedIn(req, res, next) {
     res.redirect('/');
 }
 
+router.post('/newLetter', function(req, res) {
+    var letter = new Letter();
+    //console.log(req.body);
+    
+    letter.ownerID = req.user.facebook.id;
+    letter.recepientID = req.body.recipient;
+    letter.title = req.body.letterTitle;
+    letter.content = req.body.letterContent;
+
+    letter.save(function(err){
+        if (err)
+            throw err;
+    });
+    res.redirect('/');
+});
 module.exports = router;

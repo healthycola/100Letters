@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var facebook = require('../models/fbReqs.js')
-var Letter = require('../models/letter.js')
+var facebook = require('../models/fbReqs.js');
+var Letter = require('../models/letter.js');
+var User = require('../models/user.js');
 /* GET home page. */ 
 
 router.get('/', function(req, res) {
@@ -46,8 +47,24 @@ router.get('/writeLetter', isLoggedIn,
 
 router.get('/viewAllLetters', isLoggedIn, 
     function(req, res) {
-    res.render('viewAllLetters', { user : req.user,
-                          title: 'All Letters'});
+        Letter.find({ownerID: req.user.facebook.id}, 'title', function(err, lettersSent){
+            if (err)
+                console.log(err);
+            else
+            {
+                console.log(lettersSent);
+                Letter.find({recepientID: req.user.facebook.id}, 'title', function(err, lettersReceived){
+                    if (err)
+                        console.log(err);
+                    else
+                    {
+                        res.render('viewAllLetters', { sentLetters : lettersSent,
+                            receivedLetters: lettersReceived,
+                            title: 'All Letters'});
+                    }
+                });
+            }
+        });
     }
 );
 
@@ -63,7 +80,6 @@ function isLoggedIn(req, res, next) {
 router.post('/newLetter', function(req, res) {
     var letter = new Letter();
     //console.log(req.body);
-    
     letter.ownerID = req.user.facebook.id;
     letter.recepientID = req.body.recipient;
     letter.title = req.body.letterTitle;
@@ -74,5 +90,14 @@ router.post('/newLetter', function(req, res) {
             throw err;
     });
     res.redirect('/');
+
+    /*
+    User.findOne({ 'facebook.id' : req.body.recipient}, '_id', function(err, person)
+    {
+        if (err) return handleError(err);
+        saveLetter(person._id);
+    });
+    */
+    
 });
 module.exports = router;

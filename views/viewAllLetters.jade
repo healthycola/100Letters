@@ -10,15 +10,27 @@ block content
     div.tab-content(id='myTabContent')
         div.tab-pane.fade.active.in(id='toMe')
             table.table.table-striped.table-hover
+                thead
+                    tr
+                        th From
+                        th Title
                 tbody
                     -for (var a = 0; a < receivedLetters.length; a++)
                         tr
                             td
-                                a(href="#") #{receivedLetters[a].title}
+                                a(href="#") #{receivedLettersUsers[a].facebook.name} 
+                            td
+                                a(href="#") #{receivedLetters[a].title} 
         div.tab-pane.fade(id='fromMe')
             table.table.table-striped.table-hover
+                thead
+                    tr
+                        th To
+                        th Title
                 tbody
                     -for (var a = 0; a < sentLetters.length; a++)
                         tr
                             td 
+                                a(href="#") #{sentLettersUsers[a].facebook.name}
+                            td
                                 a(href="#") #{sentLetters[a].title}

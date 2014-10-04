@@ -48,6 +48,7 @@ router.get('/writeLetter', isLoggedIn,
 
 router.get('/viewAllLetters', isLoggedIn, 
     function(req, res) {
+        /*
         Letter.find({ownerID: req.user.facebook.id}, 'title', function(err, lettersSent){
             if (err)
                 console.log(err);
@@ -66,6 +67,77 @@ router.get('/viewAllLetters', isLoggedIn,
                 });
             }
         });
+        */
+        Async.waterfall([
+            function (cb) {
+                Letter.find({ownerID: req.user.facebook.id}, 'title recepientID', function(err, lettersSent){
+                    if (err)
+                        console.log(err);
+                    else
+                    {
+                        var sentLettersUsers = []; 
+                        var getUsers = function (a) 
+                        {   
+                            if (a < lettersSent.length) {
+                            User.findOne({'facebook.id': lettersSent[a].recepientID}, 'facebook', function(err, userFound){
+                                    if (err)
+                                        console.log(err);
+                                    else
+                                    {
+                                        sentLettersUsers[sentLettersUsers.length] = userFound;
+                                        getUsers(a += 1);
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                cb(null, { sentLetters: lettersSent, sentLettersUsers: sentLettersUsers });
+                            }
+                        };
+                        getUsers(0);
+                    }
+                    }
+                );
+            },
+
+            function (input, cb) {
+                Letter.find({recepientID: req.user.facebook.id}, 'title ownerID', function(err, lettersReceived){
+                    if (err)
+                        console.log(err);
+                    else
+                    {
+                        var receivedLettersUsers = [];
+                        var getUsers = function (a) 
+                        {   
+                            if (a < lettersReceived.length) {
+                                User.findOne({'facebook.id': lettersReceived[a].ownerID}, 'facebook', function(err, userFound){
+                                    if (err)
+                                        console.log(err);
+                                    else
+                                    {
+                                        console.log(userFound);
+                                        receivedLettersUsers[receivedLettersUsers.length] = userFound;
+                                        getUsers(a += 1);
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                input.receivedLetters = lettersReceived;
+                                input.receivedLettersUsers = receivedLettersUsers;
+                                cb(null, input);
+                            }
+                        }
+                        getUsers(0);
+                    }
+                });
+            },
+
+            function(input, cb) {
+                console.log(input);
+                res.render('viewAllLetters', input);
+            }
+        ]);
     }
 );
 

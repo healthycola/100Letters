@@ -13,7 +13,8 @@ block content
                 tbody
                     -for (var a = 0; a < receivedLetters.length; a++)
                         tr
-                            td Letter to me #{receivedLetters[a].title}
+                            td
+                                a(href="#") #{receivedLetters[a].title}
         div.tab-pane.fade(id='fromMe')
             table.table.table-striped.table-hover
                 tbody

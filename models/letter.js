@@ -3,8 +3,8 @@ var Letter = require('../models/user.js')
 
 var letterSchema = mongoose.Schema({
     id: Number,
-    _ownerID: { type: Number, ref: 'User' },
-    _recepientID: { type: Number, ref: 'User' },
+    ownerID: String,
+    recepientID: String,
     title: String,
     content: String
 });

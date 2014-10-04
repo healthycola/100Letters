@@ -11,6 +11,7 @@ var session = require('express-session');
 var configDB = require('./config/database.js');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var async = require('async');
 
 var app = express();
 

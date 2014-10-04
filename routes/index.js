@@ -4,6 +4,7 @@ var passport = require('passport');
 var facebook = require('../models/fbReqs.js');
 var Letter = require('../models/letter.js');
 var User = require('../models/user.js');
+var Async = require('async');
 /* GET home page. */ 
 
 router.get('/', function(req, res) {

@@ -19,6 +19,7 @@
     "jade": "~1.6.0",
     "stylus": "0.42.3",
     "connect-flash": "~0.1.1",
-    "express-session": "~1.0.0"
+    "express-session": "~1.0.0",
+    "async": "latest"
   }
 }

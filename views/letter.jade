@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    h2 #{letter.title}
+    blockquote
+        h4 Dear #{recepient.facebook.name}
+        p #{letter.content}
+        small #{owner.facebook.name}

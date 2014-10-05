@@ -12,7 +12,7 @@ block content
             table.table.table-striped.table-hover
                 thead
                     tr
-                        th From
+                        th.col-sm-2 From
                         th Title
                 tbody
                     -for (var a = 0; a < receivedLetters.length; a++)
@@ -20,12 +20,12 @@ block content
                             td
                                 a(href="#") #{receivedLettersUsers[a].facebook.name} 
                             td
-                                a(href="#") #{receivedLetters[a].title} 
+                                a(href=('letter?id=' + receivedLetters[a]._id)) #{receivedLetters[a].title} 
         div.tab-pane.fade(id='fromMe')
             table.table.table-striped.table-hover
                 thead
                     tr
-                        th To
+                        th.col-sm-2 To
                         th Title
                 tbody
                     -for (var a = 0; a < sentLetters.length; a++)

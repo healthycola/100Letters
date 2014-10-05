@@ -48,27 +48,7 @@ router.get('/writeLetter', isLoggedIn,
 
 router.get('/viewAllLetters', isLoggedIn, 
     function(req, res) {
-        /*
-        Letter.find({ownerID: req.user.facebook.id}, 'title', function(err, lettersSent){
-            if (err)
-                console.log(err);
-            else
-            {
-                console.log(lettersSent);
-                Letter.find({recepientID: req.user.facebook.id}, 'title', function(err, lettersReceived){
-                    if (err)
-                        console.log(err);
-                    else
-                    {
-                        res.render('viewAllLetters', { sentLetters : lettersSent,
-                            receivedLetters: lettersReceived,
-                            title: 'All Letters'});
-                    }
-                });
-            }
-        });
-        */
-        Async.waterfall([
+       Async.waterfall([
             function (cb) {
                 Letter.find({ownerID: req.user.facebook.id}, 'title recepientID', function(err, lettersSent){
                     if (err)
@@ -96,8 +76,7 @@ router.get('/viewAllLetters', isLoggedIn,
                         };
                         getUsers(0);
                     }
-                    }
-                );
+                });
             },
 
             function (input, cb) {
@@ -135,11 +114,55 @@ router.get('/viewAllLetters', isLoggedIn,
 
             function(input, cb) {
                 console.log(input);
+                input.title = 'My Letters';
                 res.render('viewAllLetters', input);
             }
         ]);
     }
 );
+
+router.get('/letter', function(req, res) {
+    var letterid = req.query.id;
+    Async.waterfall([
+        function(cb)
+        {
+            Letter.findOne({_id: letterid}, 'title content ownerID recepientID', function(err, letterRecieved){
+                if (err)
+                    console.log(err);
+                else
+                    cb(null, {letter: letterRecieved});
+            });
+        },
+        function(input, cb)
+        {
+            User.findOne({'facebook.id': input.letter.ownerID}, 'facebook', function(err, owner){
+                if (err)
+                    console.log(err);
+                else
+                {
+                    input.owner = owner;
+                    cb(null, input);
+                }
+            });
+        },
+        function(input, cb)
+        {
+            User.findOne({'facebook.id': input.letter.recepientID}, 'facebook', function(err, recepient){
+                if (err)
+                    console.log(err);
+                else
+                {
+                    input.recepient = recepient;
+                    cb(null, input);
+                }
+            });
+        },
+        function(input, cb) {
+            console.log(input);
+            res.render('letter', input);
+        }    
+    ]);
+});
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())

@@ -18,7 +18,7 @@ block content
                     -for (var a = 0; a < receivedLetters.length; a++)
                         tr
                             td
-                                a(href="#") #{receivedLettersUsers[a].facebook.name} 
+                                i #{receivedLettersUsers[a].facebook.name} 
                             td
                                 a(href=('letter?id=' + receivedLetters[a]._id)) #{receivedLetters[a].title} 
         div.tab-pane.fade(id='fromMe')
@@ -31,6 +31,6 @@ block content
                     -for (var a = 0; a < sentLetters.length; a++)
                         tr
                             td 
-                                a(href="#") #{sentLettersUsers[a].facebook.name}
+                                i #{sentLettersUsers[a].facebook.name}
                             td
-                                a(href="#") #{sentLetters[a].title}
+                                a(href=('letter?id=' + sentLetters[a]._id)) #{sentLetters[a].title}
